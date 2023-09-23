@@ -63,7 +63,15 @@ const signUp = async (req, res)=>{
     }
 }
 
+const recover = (req, res)=>{
+    return res.json({
+        success:true,
+        data: req.auth
+    })
+}
+
 module.exports = {
     login,
-    signUp
+    signUp,
+    recover
 }
