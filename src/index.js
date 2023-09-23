@@ -5,6 +5,7 @@ const auth = require('./routes/auth')
 const products = require('./routes/products')
 const cors = require('cors')
 const { handleAuthError } = require('./middlewares/auth')
+const payments = require('./routes/payments')
 
 const app = express()
 connect()
@@ -17,6 +18,7 @@ app.use(express.json())
 //Routes
 auth(app)
 products(app)
+payments(app)
 
 app.use(handleAuthError)
 app.listen(port, ()=>{

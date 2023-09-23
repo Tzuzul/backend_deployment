@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken')
 const { jwtKey } = require('../config')
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const { del } = require('express/lib/application')
 
 const login = async (req, res)=>{
     const {email, password} = req.body
