@@ -37,12 +37,14 @@ const createOrder = async (req, res)=>{
             }
         })
 
-        const paymentLink = responsePaymentOrder.data.links[1].href
-        console.log(paymentLink)
+        // console.log(responsePaymentOrder.data)
+
+        // const paymentLink = responsePaymentOrder.data.links[1].href
+        // console.log(paymentLink)
 
         return res.json({
             success: true,
-            paymentLink
+            orderID: responsePaymentOrder.data.id
         })
     } catch (error) {
         console.log(error.response?.data)

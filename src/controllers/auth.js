@@ -45,6 +45,15 @@ const login = async (req, res)=>{
 const signUp = async (req, res)=>{
     try {
         const user = new User(req.body)
+        const validationResult = user.validateSync();
+
+        if(validationResult?.errors){
+            return res.status(400).json({
+                success: false, 
+                message: Object.keys(validationResult.errors).map((key)=>{return {property:key, message:validationResult.errors[key].message}}),
+            })
+        }
+
         user.hashPassword(req.body.password)
         const userSaved = (await user.save()).toJSON()
         delete userSaved.password
@@ -54,11 +63,18 @@ const signUp = async (req, res)=>{
             data: userSaved
         })
     } catch (error) {
-        console.log(error)
-        return res.json({
-            success: false, 
-            message: 'Usuario ya registrado',
-        })
+        console.log('Catch', error)
+        if(error.code===11000){
+            return res.status(400).json({
+                success: false, 
+                message: 'Usuario ya registrado',
+            })
+        }else{
+            return res.status(400).json({
+                success: false, 
+                message: 'Ocurrio un error. Intenta mas tarde.',
+            })
+        }
     }
 }
 

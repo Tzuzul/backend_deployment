@@ -3,10 +3,23 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-    name: String,
-    lastName: String,
-    email: String,
-    password: String
+    name: {
+        type: String,
+        required: [true, 'User name required']
+    },
+    lastName: {
+        type: String,
+        required: [true, 'Last name required']
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: [true, 'E-mail required']
+    },
+    password: {
+        type:String,
+        required: [true, 'E-mail required']
+    }
 })
 
 userSchema.methods.hashPassword = function(password){

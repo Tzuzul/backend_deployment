@@ -22,7 +22,7 @@ const auth = expressJWT({
 
 const handleAuthError = (error, req, res, next)=>{
     if (error.name === "UnauthorizedError") {
-        res.status(401).json({
+        return res.status(401).json({
             success:false,
             message:'Unauthorized'
         });
