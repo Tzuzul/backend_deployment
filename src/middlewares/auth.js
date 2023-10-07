@@ -20,6 +20,36 @@ const auth = expressJWT({
     getToken
 })
 
+// Middleware custom
+// const verifyRole = (req, res, next)=>{
+//     console.log(req.auth)
+//     if(req.auth.role!=="ADMIN"){
+//         return res.status(403).json({
+//             success:false,
+//             message: "No tienes los permisos necesarios"
+//         })
+//     }
+
+//     return next()
+// }
+
+// Midlleware custom para verificar cualquier clase de rol
+// AllowedRoles debe un array
+const verifyRole = (allowedRoles)=>{
+
+    // Devolviendo un middleware
+    return  (req, res, next)=>{
+        if(allowedRoles.includes(req.auth.role)){
+            return next()
+        }
+
+        return res.status(403).json({
+            success:false,
+            message: "No tienes los permisos necesarios"
+        })
+    }
+}
+
 const handleAuthError = (error, req, res, next)=>{
     if (error.name === "UnauthorizedError") {
         return res.status(401).json({
@@ -31,4 +61,4 @@ const handleAuthError = (error, req, res, next)=>{
     }
 }
 
-module.exports = {auth, handleAuthError}
+module.exports = {auth, handleAuthError, verifyRole}

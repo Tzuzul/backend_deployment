@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema({
     password: {
         type:String,
         required: [true, 'E-mail required']
+    },
+    passwordRecoveryCode: String,
+    role:{
+        type: String,
+        enum: ['ADMIN','EDITOR','REGULAR'],
+        default: 'REGULAR'
     }
 })
 
